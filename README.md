@@ -11,7 +11,17 @@
   </tr>
 </table>
 
-## 📌 Características
+## ⚡ Únete a nuestro servidor de Discord  
+
+Intercambia ideas, colabora en proyectos y conéctate con otros desarrolladores y entusiastas de la tecnología.  
+
+🔗 [Enlace de invitación](https://discord.gg/UGhbwxJy6s)  
+
+Nos vemos dentro.  
+
+
+
+## 📌 Características 
 - **🎵 Reproducción local:** Carga y reproduce archivos MP3 almacenados en la carpeta `Musicpod`.
 - **🔎 Búsqueda en YouTube:** Permite buscar canciones en YouTube usando `yt_dlp` y reproducirlas sin necesidad de descargarlas.
 - **📻 Modo Radio:** Reproduce en modo radio utilizando los resultados de búsqueda de YouTube.
