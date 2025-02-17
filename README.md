@@ -11,12 +11,9 @@
   </tr>
 </table>
 
-## ⚡ Únete a nuestro servidor de Discord  
+## ⚡ Únete a nuestro servidor de Discord   🔗 [Enlace de invitación](https://discord.gg/UGhbwxJy6s)   
 
 Intercambia ideas, colabora en proyectos y conéctate con otros desarrolladores y entusiastas de la tecnología.  
-
-🔗 [Enlace de invitación](https://discord.gg/UGhbwxJy6s)  
-
 Nos vemos dentro.  
 
 
