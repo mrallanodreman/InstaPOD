@@ -1,4 +1,5 @@
-# InstaPOD
+# InstaPOD 
+![Logo de InstaPOD](https://i.postimg.cc/tRm0mKyK/Logito.png)
 
 InstaPOD es un reproductor de música y gestor multimedia basado en PyQt6. Permite reproducir archivos locales (MP3) y buscar/reproducir canciones de YouTube. Además, incorpora un sistema de notificaciones (usando notify2) y un icono en la bandeja del sistema con opciones para abrir la ventana completa o salir de la aplicación.
 
