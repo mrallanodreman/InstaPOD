@@ -1,4 +1,4 @@
-# InstaPOD
+<h1 align="center">🎧 InstaPOD 🎧</h1>
 
 <table>
   <tr>
