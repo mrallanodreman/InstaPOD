@@ -20,6 +20,7 @@ Intercambia ideas, colabora en proyectos y conéctate con otros desarrolladores 
 Nos vemos dentro.  
 
 
+[![image.png](https://i.postimg.cc/cJ2K19N6/image.png)](https://postimg.cc/KK7cJ5jy)
 
 ## 📌 Características 
 - **🎵 Reproducción local:** Carga y reproduce archivos MP3 almacenados en la carpeta `Musicpod`.
