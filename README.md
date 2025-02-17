@@ -57,7 +57,7 @@ pip install -r requirements.txt
 Para iniciar la aplicación, ejecuta:
 
 ```sh
-python main.py
+python Instapot.py
 ```
 
 ## 🎛 Uso
