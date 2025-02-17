@@ -29,3 +29,36 @@ InstaPOD es un reproductor de música y gestor multimedia basado en PyQt6. Permi
    ```bash
    git clone https://github.com/tu_usuario/instapod.git
    cd instapod
+Crea un entorno virtual (opcional, pero recomendado):
+
+bash
+Copy
+python3 -m venv venv
+source venv/bin/activate   # En Windows: venv\Scripts\activate
+Instala las dependencias:
+
+Si cuentas con un archivo requirements.txt:
+
+bash
+Copy
+pip install -r requirements.txt
+Si no lo tienes, instala los paquetes manualmente:
+
+bash
+Copy
+pip install PyQt6 yt-dlp notify2 mutagen
+Uso
+Para ejecutar la aplicación, simplemente corre:
+
+bash
+Copy
+python instapod.py
+La aplicación se iniciará mostrando la interfaz principal, que incluye las siguientes pestañas:
+
+Biblioteca: Muestra tus archivos MP3 locales.
+Buscar: Permite buscar canciones en YouTube.
+Configuración: Aquí puedes ajustar opciones (por ejemplo, cambiar el valor del volumen).
+Además, la aplicación se minimiza a la bandeja del sistema. Con un clic derecho en el icono, podrás seleccionar:
+
+Abrir Completo: Para mostrar la ventana principal.
+Salir: Para cerrar la aplicación.
