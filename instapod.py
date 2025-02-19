@@ -81,7 +81,7 @@ def get_local_cover_art(file_path):
 class MusicPlayer(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("InstaPOD - Allan Odreman")
+        self.setWindowTitle("InstaPOD - Mr.Polemics")
         self.resize(1000, 400)
 
         # Configuración para guardar opciones (volumen, etc.)
