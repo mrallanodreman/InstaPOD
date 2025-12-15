@@ -1,106 +1,71 @@
-# InstaPOD - Plugin de Winamp
-## Descarga música de YouTube directamente en Winamp
+# Music4All - Plugin de Winamp
 
-### 📋 Requisitos
+Music4All es un **plugin para Winamp 5.x** que agrega integración para buscar/descargar audio desde YouTube (vía `yt-dlp`) y añadirlo a Winamp.
 
-1. **Visual Studio** (Community Edition es gratis)
-2. **Python 3** instalado en el sistema
-3. **yt-dlp** instalado: `pip install yt-dlp`
-4. **Winamp** instalado
+## Componentes
 
-### 🔨 Compilación
+| Componente | DLL | Dónde aparece |
+|---|---|---|
+| Media Library | `ml_music4all.dll` | Árbol y panel dentro de **Media Library** |
+| General Purpose | `gen_music4all.dll` | Preferences → Plug-ins → **General Purpose** |
 
-#### Opción 1: Visual Studio GUI
+## Requisitos
 
-1. Abre Visual Studio
-2. File → New → Project from Existing Code
-3. Selecciona la carpeta `winamp_plugin`
-4. Tipo de proyecto: Visual C++
-5. Configuración:
-   - Output type: **DLL**
-   - Output name: **gen_instapod.dll**
-   - Configuration: **Release, x86**
+- Windows
+- Winamp 5.x
+- Visual Studio (Community sirve) con **Desktop development with C++**
+- `yt-dlp.exe` (recomendado: copiar junto a los DLLs en `Winamp\Plugins\`)
+- `ffmpeg`/`ffprobe` (opcional pero recomendado)
 
-6. Click derecho en el proyecto → Properties:
-   - C/C++ → General → Additional Include Directories: `.`
-   - Linker → Input → Additional Dependencies: `user32.lib gdi32.lib`
-   
-7. Build → Build Solution (F7)
+## Compilación
 
-#### Opción 2: Línea de comandos (Developer Command Prompt)
+### Opción recomendada (script)
 
-```cmd
-cd c:\Users\Hobeat\InstaPOD-main\winamp_plugin
-rc instapod.rc
-cl /LD /O2 gen_instapod.cpp instapod.res user32.lib gdi32.lib /Fe:gen_instapod.dll
+Ejecuta el script de build:
+
+```bat
+winamp_plugin\build.bat
 ```
 
-### 📦 Instalación
+Salida esperada en `winamp_plugin\`:
 
-1. Copia `gen_instapod.dll` a la carpeta de plugins de Winamp:
-   ```
-   C:\Program Files (x86)\Winamp\Plugins\
-   ```
+- `ml_music4all.dll`
+- `gen_music4all.dll`
 
-2. Copia `instapod.py` (el archivo principal) a la misma carpeta:
-   ```
-   C:\Program Files (x86)\Winamp\Plugins\
-   ```
+## Instalación
 
-3. Reinicia Winamp
+1. Copia a la carpeta de plugins de Winamp:
 
-4. Ve a: **Options → Preferences → Plug-ins → General Purpose**
-
-5. Verás **"InstaPOD YouTube Downloader"** en la lista
-
-6. Selecciónalo y haz clic en **"Configure"**
-
-### 🎵 Uso
-
-**Desde Winamp:**
-1. Abre el plugin (Options → Preferences → Plug-ins → General Purpose → InstaPOD)
-2. Pega una URL de YouTube
-3. Click en "Descargar y Agregar a Winamp"
-4. La canción se descarga como MP3 y se agrega automáticamente a tu biblioteca
-
-**Atajo de teclado (opcional):**
-- Puedes asignar un hotkey en Winamp para abrir el plugin rápidamente
-
-### ⚡ Características
-
-✅ Descarga directa desde YouTube
-✅ Conversión automática a MP3
-✅ Integración nativa con Winamp
-✅ Agrega canciones a la playlist automáticamente
-✅ Botón para abrir InstaPOD completo
-✅ Interfaz simple y rápida
-
-### 🔧 Compilación Alternativa (MinGW)
-
-Si prefieres MinGW en lugar de Visual Studio:
-
-```bash
-windres instapod.rc -O coff -o instapod.res
-g++ -shared -o gen_instapod.dll gen_instapod.cpp instapod.res -luser32 -lgdi32 -mwindows -s -O2
+```
+C:\Program Files (x86)\Winamp\Plugins\
 ```
 
-### 📝 Notas
+2. Archivos a copiar:
 
-- El plugin requiere que Python y yt-dlp estén en el PATH del sistema
-- Las descargas se guardan en la carpeta de música de Winamp
-- Puedes personalizar la carpeta de descarga editando el código
+- `ml_music4all.dll`
+- `gen_music4all.dll`
+- `yt-dlp.exe` (recomendado)
 
-### 🐛 Troubleshooting
+3. Reinicia Winamp.
 
-**"No se puede cargar el plugin":**
-- Asegúrate de compilar para x86 (32-bit), no x64
-- Verifica que todas las DLLs de Visual C++ Runtime estén instaladas
+### Alternativa (instalación automática)
 
-**"Python no encontrado":**
-- Agrega Python al PATH del sistema
-- O edita el código para usar una ruta absoluta a python.exe
+- PowerShell: `install_to_winamp.ps1`
+- Admin (UAC): `install_plugins_admin.bat`
 
-**"yt-dlp no funciona":**
-```cmd
-pip install --upgrade yt-dlp
-```
+## Uso
+
+- **Media Library**: abre el panel **Music4All** desde el árbol.
+- **General Purpose**: Preferences → Plug-ins → General Purpose → **Music4All YouTube Downloader** → Configure.
+
+## Troubleshooting
+
+### El plugin no carga
+
+- Compila en **x86 (32-bit)**.
+- Asegúrate de que Winamp sea 5.x.
+
+### Fallan descargas
+
+- Coloca `yt-dlp.exe` en `Winamp\Plugins\` junto a los DLLs.
+- Asegura `ffmpeg`/`ffprobe` instalados o accesibles por PATH.
