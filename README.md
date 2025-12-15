@@ -22,7 +22,7 @@ Este proyecto seguirá evolucionando: se continuará añadiendo soporte a más p
 - Windows
 - Winamp 5.x
 - `yt-dlp.exe` (**obligatorio**: colócalo junto a los DLLs en la carpeta `Plugins` de Winamp)
-- `ffmpeg` / `ffprobe` (opcional pero recomendado; mejora extracción de audio y manejo de miniaturas)
+- `ffmpeg` / `ffprobe` (**recomendado**; en la práctica suele ser necesario para convertir a MP3 y para carátulas/metadata)
 
 ## Índice
 
@@ -54,6 +54,26 @@ Luego copia `yt-dlp.exe` a la carpeta de plugins de Winamp, junto a los DLLs:
 ```
 C:\Program Files (x86)\Winamp\Plugins\
 ```
+
+## Instalar `ffmpeg` y `ffprobe` (recomendado)
+
+Aunque algunas descargas pueden funcionar sin FFmpeg, **para extracción a MP3** y para funciones como **carátulas/miniaturas** y **procesamiento de audio**, normalmente necesitas `ffmpeg.exe` y `ffprobe.exe`.
+
+Descarga builds para Windows desde fuentes conocidas:
+
+- https://www.gyan.dev/ffmpeg/builds/
+- https://github.com/BtbN/FFmpeg-Builds/releases
+
+Instalación recomendada (simple):
+
+1. Descomprime el ZIP.
+2. Copia `ffmpeg.exe` y `ffprobe.exe` a:
+
+```
+C:\Program Files (x86)\Winamp\Plugins\
+```
+
+Alternativa: añade la carpeta `bin` de FFmpeg a tu **PATH**.
 
 ### Verificación rápida
 

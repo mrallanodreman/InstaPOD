@@ -21,7 +21,7 @@ Music4All es un **plugin para Winamp 5.x** que agrega integración para buscar/d
 - Winamp 5.x
 - Visual Studio (Community sirve) con **Desktop development with C++**
 - `yt-dlp.exe` (**obligatorio**: copiar junto a los DLLs en `Winamp\Plugins\`)
-- `ffmpeg`/`ffprobe` (opcional pero recomendado)
+- `ffmpeg`/`ffprobe` (**recomendado**; normalmente necesario para extracción a MP3 y carátulas/metadata)
 
 ## Compilación
 
@@ -61,6 +61,26 @@ Descarga `yt-dlp.exe` desde la página oficial de releases:
 - https://github.com/yt-dlp/yt-dlp/releases
 
 Colócalo en la carpeta `Winamp\Plugins\` junto a los DLLs:
+
+```
+C:\Program Files (x86)\Winamp\Plugins\
+```
+
+## Instalar `ffmpeg` y `ffprobe` (recomendado)
+
+Para extracción a MP3 y para el procesamiento de audio/miniaturas, `yt-dlp` suele requerir `ffmpeg.exe` y `ffprobe.exe`.
+
+Descarga builds para Windows:
+
+- https://www.gyan.dev/ffmpeg/builds/
+- https://github.com/BtbN/FFmpeg-Builds/releases
+
+Instalación recomendada:
+
+1. Descomprime el ZIP.
+2. Copia `ffmpeg.exe` y `ffprobe.exe` a `Winamp\Plugins\` junto a los DLLs.
+
+Ruta típica:
 
 ```
 C:\Program Files (x86)\Winamp\Plugins\
