@@ -1,4 +1,10 @@
-# Music4All - Plugin de Winamp
+# Music4All — Plugin de Winamp (Win32)
+
+[![Windows](https://img.shields.io/badge/OS-Windows-0078D4)](https://www.microsoft.com/windows)
+![Winamp](https://img.shields.io/badge/Winamp-5.x-4CAF50)
+![C++](https://img.shields.io/badge/C%2B%2B-Win32-00599C)
+
+**Tags:** `winamp` `plugin` `windows` `media-library` `yt-dlp`
 
 Music4All es un **plugin para Winamp 5.x** que agrega integración para buscar/descargar audio desde YouTube (vía `yt-dlp`) y añadirlo a Winamp.
 
@@ -14,7 +20,7 @@ Music4All es un **plugin para Winamp 5.x** que agrega integración para buscar/d
 - Windows
 - Winamp 5.x
 - Visual Studio (Community sirve) con **Desktop development with C++**
-- `yt-dlp.exe` (recomendado: copiar junto a los DLLs en `Winamp\Plugins\`)
+- `yt-dlp.exe` (**obligatorio**: copiar junto a los DLLs en `Winamp\Plugins\`)
 - `ffmpeg`/`ffprobe` (opcional pero recomendado)
 
 ## Compilación
@@ -44,7 +50,7 @@ C:\Program Files (x86)\Winamp\Plugins\
 
 - `ml_music4all.dll`
 - `gen_music4all.dll`
-- `yt-dlp.exe` (recomendado)
+- `yt-dlp.exe` (**obligatorio**)
 
 3. Reinicia Winamp.
 
