@@ -1,57 +1,45 @@
 # Music4All (Winamp)
 
-This is the **Winamp plugin** for Music4All.
+Music4All es un **plugin para Winamp**.
 
-Music4All adds a Media Library panel to search and download audio from YouTube via `yt-dlp`, saving files as MP3 and adding them to Winamp.
+Agrega un panel en **Media Library** para buscar y descargar audio desde YouTube usando `yt-dlp`, guardando como MP3 y añadiéndolo a Winamp.
 
-We’ll keep expanding support to more apps, platforms, and devices over time.
+Este proyecto seguirá evolucionando: iremos añadiendo soporte a más plataformas, aplicaciones y dispositivos.
 
-This repository also includes an optional Python “companion” UI.
-
-## Requirements
+## Requisitos
 
 - Windows
-- Winamp (5.x)
-- `yt-dlp.exe` (recommended: place next to the plugin DLLs in Winamp’s `Plugins` folder)
-- `ffmpeg` / `ffprobe` (optional but recommended; used by `yt-dlp` for audio extraction and thumbnails)
+- Winamp 5.x
+- `yt-dlp.exe` (recomendado: colócalo junto a los DLLs en la carpeta `Plugins` de Winamp)
+- `ffmpeg` / `ffprobe` (opcional pero recomendado; ayuda a `yt-dlp` con extracción de audio y miniaturas)
 
-## Install
+## Instalación
 
-1. Build the DLLs from source (see **Build from source**) or download them from your project releases.
-2. Copy these files into your Winamp `Plugins` folder (typically `C:\Program Files (x86)\Winamp\Plugins\`):
-   - `ml_music4all.dll` (built or downloaded)
-   - `gen_music4all.dll` (built or downloaded)
-   - `music4all.py`
-   - `instapod.py` (implementation used by `music4all.py`)
-3. Restart Winamp.
+1. Compila los DLLs desde el código fuente (ver **Compilar**) o descárgalos desde *Releases*.
+2. Copia estos archivos a la carpeta de plugins de Winamp (normalmente `C:\Program Files (x86)\Winamp\Plugins\`):
+   - `ml_music4all.dll`
+   - `gen_music4all.dll`
+   - `yt-dlp.exe` (recomendado)
+3. Reinicia Winamp.
 
-You should see **Music4All** in the Winamp Media Library tree.
+Deberías ver **Music4All** dentro del árbol de **Media Library**.
 
-## Build from source
+## Compilar
 
-1. Install Visual Studio (Community is fine) with C++ desktop tools.
-2. Run:
+1. Instala Visual Studio (Community sirve) con *Desktop development with C++*.
+2. Ejecuta:
    - `winamp_plugin\build.bat`
-3. Copy the generated DLLs (and the Python files) as described in **Install**.
+3. Copia los DLLs generados como se indica en **Instalación**.
 
-## Optional: Python companion app
+## Notas
 
-The companion can be launched from inside Winamp (button “Abrir Music4All”) or directly:
+- Las descargas se realizan con `yt-dlp`.
+- Los nombres de archivo se normalizan para ser compatibles con Windows.
 
-```bat
-python music4all.py
-```
+## Contribuir
 
-Python dependencies are listed in `requirements.txt`.
-
-## Notes
-
-- Downloads are performed via `yt-dlp`.
-- Output files are saved with Windows-safe filenames.
-Si deseas contribuir al proyecto, sigue estos pasos:
 1. Haz un fork del repositorio.
-2. Crea una nueva rama (`git checkout -b nueva-funcionalidad`).
-3. Realiza tus modificaciones y haz commit (`git commit -m 'Añadir nueva funcionalidad'`).
-4. Sube tus cambios (`git push origin nueva-funcionalidad`).
-5. Crea un pull request.
+2. Crea una rama (`git checkout -b mi-cambio`).
+3. Realiza tus cambios y haz commit.
+4. Abre un Pull Request.
 
