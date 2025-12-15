@@ -43,6 +43,18 @@ Este proyecto seguirá evolucionando: se continuará añadiendo soporte a más p
    - `yt-dlp.exe` (**obligatorio**)
 3. Reinicia Winamp.
 
+## Descargar `yt-dlp.exe` (obligatorio)
+
+Descarga `yt-dlp.exe` desde la página oficial de releases:
+
+- https://github.com/yt-dlp/yt-dlp/releases
+
+Luego copia `yt-dlp.exe` a la carpeta de plugins de Winamp, junto a los DLLs:
+
+```
+C:\Program Files (x86)\Winamp\Plugins\
+```
+
 ### Verificación rápida
 
 - Abre Winamp → **Media Library** → debería aparecer **Music4All** en el árbol.

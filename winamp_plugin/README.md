@@ -54,6 +54,18 @@ C:\Program Files (x86)\Winamp\Plugins\
 
 3. Reinicia Winamp.
 
+## Descargar `yt-dlp.exe` (obligatorio)
+
+Descarga `yt-dlp.exe` desde la página oficial de releases:
+
+- https://github.com/yt-dlp/yt-dlp/releases
+
+Colócalo en la carpeta `Winamp\Plugins\` junto a los DLLs:
+
+```
+C:\Program Files (x86)\Winamp\Plugins\
+```
+
 ### Alternativa (instalación automática)
 
 - PowerShell: `install_to_winamp.ps1`
