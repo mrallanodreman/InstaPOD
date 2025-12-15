@@ -1,0 +1,55 @@
+//=====================================================
+// Music4All Resource File
+//=====================================================
+
+#include <windows.h>
+#include "resource.h"
+
+// Media Library tree icon (16x16 BMP, grayscale)
+IDB_MUSIC4ALL_TREE BITMAP "music4all_tree.bmp"
+
+// Dialog
+IDD_DIALOG1 DIALOGEX 0, 0, 320, 180
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Music4All - YouTube Downloader for Winamp"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "URL de YouTube o búsqueda:", IDC_STATIC, 10, 10, 300, 8
+    EDITTEXT        IDC_EDIT_URL, 10, 22, 300, 14, ES_AUTOHSCROLL
+    
+    PUSHBUTTON      "Descargar y Agregar a Winamp", IDC_BUTTON_DOWNLOAD, 10, 45, 150, 18
+    PUSHBUTTON      "Abrir Music4All", IDC_BUTTON_LAUNCH_INSTAPOD, 165, 45, 145, 18
+    
+    LTEXT           "Estado:", IDC_STATIC, 10, 75, 30, 8
+    LTEXT           "", IDC_STATUS, 45, 75, 265, 8
+    
+    GROUPBOX        "Instrucciones", IDC_STATIC, 10, 90, 300, 60
+    LTEXT           "1. Pega una URL de YouTube o escribe una búsqueda\n2. Haz clic en 'Descargar' para descargar como MP3\n3. La canción se agregará automáticamente a tu biblioteca de Winamp\n4. Usa 'Abrir Music4All' para la interfaz completa", 
+                    IDC_STATIC, 20, 102, 280, 40
+    
+    DEFPUSHBUTTON   "Cerrar", IDCANCEL, 260, 160, 50, 14
+END
+
+// Embedded (Media Library) dialog: child control, no caption
+IDD_DIALOG_ML DIALOGEX 0, 0, 560, 220
+STYLE DS_SETFONT | DS_CONTROL | WS_CHILD | WS_VISIBLE
+FONT 9, "MS Shell Dlg"
+BEGIN
+    EDITTEXT        IDC_EDIT_URL, 12, 26, 430, 18, ES_AUTOHSCROLL
+    CONTROL         "Buscar", IDC_BUTTON_SEARCH, "Button", BS_OWNERDRAW | BS_DEFPUSHBUTTON | WS_TABSTOP, 450, 26, 98, 18
+
+    CONTROL         "", IDC_LIST_RESULTS, "SysListView32", LVS_REPORT | LVS_SINGLESEL | WS_TABSTOP | WS_CHILD | WS_VISIBLE, 12, 52, 336, 130
+
+    LTEXT           "DESCARGAS", IDC_LABEL_DOWNLOADS, 356, 52, 192, 10
+    CONTROL         "", IDC_LIST_DOWNLOADS, "SysListView32", LVS_REPORT | LVS_SINGLESEL | WS_TABSTOP | WS_CHILD | WS_VISIBLE, 356, 64, 192, 118
+
+    CONTROL         "Anterior", IDC_BUTTON_PREV, "Button", BS_OWNERDRAW | BS_PUSHBUTTON | WS_TABSTOP, 12, 188, 70, 20
+    LTEXT           "P\xE1gina 1", IDC_LABEL_PAGE, 90, 191, 180, 12
+    CONTROL         "Siguiente", IDC_BUTTON_NEXT, "Button", BS_OWNERDRAW | BS_PUSHBUTTON | WS_TABSTOP, 278, 188, 70, 20
+
+    CONTROL         "Abrir Music4All", IDC_BUTTON_LAUNCH_INSTAPOD, "Button", BS_OWNERDRAW | BS_PUSHBUTTON | WS_TABSTOP, 356, 186, 92, 22
+    CONTROL         "Descargar MP3", IDC_BUTTON_DOWNLOAD, "Button", BS_OWNERDRAW | BS_PUSHBUTTON | WS_TABSTOP, 456, 186, 92, 22
+
+    LTEXT           "", IDC_STATUS, 12, 210, 330, 10
+    LTEXT           "Music4All", IDC_LABEL_BRAND, 356, 210, 192, 10
+END

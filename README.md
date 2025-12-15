@@ -1,78 +1,49 @@
-<h1 align="center">🎧 InstaPOD 🎧</h1>
+# Music4All (Winamp)
 
-<table>
-  <tr>
-    <td>
-      InstaPOD es un reproductor de música y gestor multimedia basado en PyQt6. Permite reproducir archivos locales (MP3) y buscar/reproducir canciones de YouTube. Además, incorpora un sistema de notificaciones (usando notify2) y un icono en la bandeja del sistema con opciones para abrir la ventana completa o salir de la aplicación.
-    </td>
-    <td align="right">
-      <img src="https://i.postimg.cc/tRm0mKyK/Logito.png" alt="Logo de InstaPOD" width="800">
-    </td>
-  </tr>
-</table>
+Music4All is a Winamp plugin that adds a Media Library panel to search and download audio from YouTube via `yt-dlp`, saving files as MP3 and adding them to Winamp.
 
-## ⚡ Únete a nuestro servidor de Discord   🔗 [Enlace de invitación](https://discord.gg/UGhbwxJy6s)   
+This repository also includes an optional Python “companion” UI.
 
-Intercambia ideas, colabora en proyectos y conéctate con otros desarrolladores y entusiastas de la tecnología.  
-Nos vemos dentro.  
+## Requirements
 
+- Windows
+- Winamp (5.x)
+- `yt-dlp.exe` (recommended: place next to the plugin DLLs in Winamp’s `Plugins` folder)
+- `ffmpeg` / `ffprobe` (optional but recommended; used by `yt-dlp` for audio extraction and thumbnails)
 
-[![image.png](https://i.postimg.cc/cJ2K19N6/image.png)](https://postimg.cc/KK7cJ5jy)
+## Install
 
-## 📌 Características 
-- **🎵 Reproducción local:** Carga y reproduce archivos MP3 almacenados en la carpeta `Musicpod`.
-- **🔎 Búsqueda en YouTube:** Permite buscar canciones en YouTube usando `yt_dlp` y reproducirlas sin necesidad de descargarlas.
-- **📻 Modo Radio:** Reproduce en modo radio utilizando los resultados de búsqueda de YouTube.
-- **⚙️ Configuración:** Guarda opciones del usuario (por ejemplo, el volumen) mediante `QSettings`.
-- **🔔 Notificaciones:** Muestra notificaciones personalizadas mediante `notify2` (en Linux) o las notificaciones integradas de Qt en Windows.
-- **🖥️ Bandeja del sistema:** Integra un icono en la bandeja del sistema con opciones para "Abrir Completo" o "Salir".
-- **🎨 Animaciones y efectos visuales:** Usa efectos de sombra para mostrar una portada (cover) atractiva.
+1. Build the DLLs from source (see **Build from source**) or download them from your project releases.
+2. Copy these files into your Winamp `Plugins` folder (typically `C:\Program Files (x86)\Winamp\Plugins\`):
+   - `ml_music4all.dll` (built or downloaded)
+   - `gen_music4all.dll` (built or downloaded)
+   - `music4all.py`
+   - `instapod.py` (implementation used by `music4all.py`)
+3. Restart Winamp.
 
-## 🛠 Requisitos
-- Python 3.6 o superior
-- PyQt6
-- yt-dlp
-- notify2 (sólo en Linux; en Windows se usan las notificaciones integradas de Qt)
-- mutagen (para extraer carátulas de archivos MP3)
+You should see **Music4All** in the Winamp Media Library tree.
 
-⚠ **Nota (Linux):** Para usar `notify2` en sistemas Linux, asegúrate de tener instalado el paquete `python3-dbus`.
+## Build from source
 
-## 🚀 Instalación
-### 1️⃣ Clonar el repositorio
-Para obtener una copia local del proyecto, usa el siguiente comando:
+1. Install Visual Studio (Community is fine) with C++ desktop tools.
+2. Run:
+   - `winamp_plugin\build.bat`
+3. Copy the generated DLLs (and the Python files) as described in **Install**.
 
-```sh
- git clone https://github.com/tu_usuario/instapod.git
- cd instapod
+## Optional: Python companion app
+
+The companion can be launched from inside Winamp (button “Abrir Music4All”) or directly:
+
+```bat
+python music4all.py
 ```
 
-### 2️⃣ Instalar dependencias
-Ejecuta el siguiente comando para instalar las dependencias necesarias:
+Python dependencies are listed in `requirements.txt`.
 
-```sh
-pip install -r requirements.txt
-```
+## Notes
 
-### 3️⃣ Ejecutar InstaPOD
-Para iniciar la aplicación, ejecuta:
-
-```sh
-python Instapot.py
-```
-
-## 🎛 Uso
-1. **Reproducir archivos locales:**
-   - Añade archivos MP3 a la carpeta `Musicpod`.
-   - Abre la aplicación y selecciona la canción deseada.
-2. **Buscar y reproducir desde YouTube:**
-   - Usa la barra de búsqueda para encontrar una canción.
-   - Haz clic en una canción para reproducirla en streaming.
-3. **Modo radio:**
-   - Busca un género o artista y activa el modo radio para reproducir canciones de forma continua.
-4. **Control de volumen y configuraciones:**
-   - Ajusta el volumen y otras configuraciones desde la interfaz.
-
-## 🤝 Contribuir
+- Downloads are performed via `yt-dlp`.
+- Output files are saved with Windows-safe filenames.
 Si deseas contribuir al proyecto, sigue estos pasos:
 1. Haz un fork del repositorio.
 2. Crea una nueva rama (`git checkout -b nueva-funcionalidad`).

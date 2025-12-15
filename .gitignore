@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Local downloads / media cache
+Musicpod/**
+!Musicpod/.gitkeep
+
+# Winamp/plugin build artifacts
+*.obj
+*.exp
+*.lib
+*.pdb
+*.res
+*.dll
+
+# Common Windows noise
+Thumbs.db
+Desktop.ini

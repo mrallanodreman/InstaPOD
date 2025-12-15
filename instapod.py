@@ -2,7 +2,7 @@ import sys
 import os
 import requests
 import yt_dlp
-import notify2
+# import notify2  # Comentado para compatibilidad con Windows
 
 
 from PyQt6.QtCore import (
@@ -78,11 +78,142 @@ def get_local_cover_art(file_path):
 # ------------------------
 # Clase principal del reproductor
 # ------------------------
-class MusicPlayer(QMainWindow):
+        self.setWindowTitle("Music4All")
     def __init__(self):
         super().__init__()
         self.setWindowTitle("InstaPOD - Mr.Polemics")
-        self.resize(1000, 400)
+        self.resize(900, 550)
+        
+        # Estilo compacto y gris
+        self.setStyleSheet("""
+            QMainWindow {
+                background: #2b2b2b;
+            }
+            QWidget {
+        self.settings = QSettings("Music4All", "Music4All")
+                color: #cccccc;
+                font-family: 'Segoe UI', Arial;
+            }
+            QTabWidget::pane {
+                border: 1px solid #2d3748;
+                border-radius: 12px;
+                background: rgba(30, 30, 46, 0.85);
+                padding: 10px;
+            }
+            QTabBar::tab {
+        self.title_label.setText("Bienvenido a Music4All")
+                color: #a0aec0;
+                padding: 12px 24px;
+                border: none;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+                margin-right: 4px;
+                font-weight: 600;
+            }
+            QTabBar::tab:selected {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #667eea, stop:1 #764ba2);
+                color: white;
+            }
+            QTabBar::tab:hover:!selected {
+                background: rgba(102, 126, 234, 0.3);
+                color: #e0e0e0;
+            }
+            QListWidget {
+                background: rgba(26, 32, 44, 0.7);
+        self.tray_icon.setToolTip("Music4All")
+                border-radius: 10px;
+                padding: 8px;
+                color: #e0e0e0;
+                outline: none;
+            }
+            self.show_custom_notification("Music4All", "Music4All se minimizó a la bandeja. Usa 'Salir' en el menú para cerrar completamente.")
+                padding: 12px;
+                border-radius: 6px;
+                margin: 2px 0;
+            }
+            self.show_notification("Music4All", "Music4All se minimizó a la bandeja. Usa 'Salir' en el menú para cerrar completamente.")
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop:0 #667eea, stop:1 #764ba2);
+                color: white;
+            }
+            QListWidget::item:hover:!selected {
+            self.cover_label.setText("🎵\n\nMusic4All")
+            }
+            QPushButton {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #667eea, stop:1 #764ba2);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                padding: 10px 20px;
+                font-weight: bold;
+                font-size: 14px;
+            }
+            QPushButton:hover {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #7c8fef, stop:1 #8b5fb5);
+            }
+            QPushButton:pressed {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #5568d3, stop:1 #653a8f);
+            }
+            QLineEdit {
+                background: rgba(26, 32, 44, 0.8);
+                border: 2px solid #2d3748;
+                border-radius: 10px;
+                padding: 12px 16px;
+                color: #e0e0e0;
+                font-size: 13px;
+            }
+            QLineEdit:focus {
+                border: 2px solid #667eea;
+                background: rgba(26, 32, 44, 0.95);
+            }
+            QSlider::groove:horizontal {
+                height: 6px;
+                background: rgba(45, 55, 72, 0.8);
+                border-radius: 3px;
+            }
+            QSlider::handle:horizontal {
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+                    stop:0 #667eea, stop:1 #764ba2);
+                width: 18px;
+                height: 18px;
+                margin: -6px 0;
+                border-radius: 9px;
+                border: 2px solid white;
+            }
+            QSlider::handle:horizontal:hover {
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+                    stop:0 #7c8fef, stop:1 #8b5fb5);
+                width: 20px;
+                height: 20px;
+                margin: -7px 0;
+            }
+            QSlider::sub-page:horizontal {
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop:0 #667eea, stop:1 #764ba2);
+                border-radius: 3px;
+            }
+            QProgressBar {
+                background: rgba(26, 32, 44, 0.8);
+                border: none;
+                border-radius: 8px;
+                height: 20px;
+                text-align: center;
+                color: white;
+                font-weight: bold;
+            }
+            QProgressBar::chunk {
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop:0 #667eea, stop:1 #764ba2);
+                border-radius: 8px;
+            }
+            QLabel {
+                color: #e0e0e0;
+            }
+        """)
 
         # Configuración para guardar opciones (volumen, etc.)
         self.settings = QSettings("User", "InstaPOD")
@@ -98,6 +229,7 @@ class MusicPlayer(QMainWindow):
         self.radio_mode = False
         self.radio_index = 0
         self.current_video_info = None
+        self.current_index = 0
 
         # Carga de canciones locales
         self.songs_data = get_songs_from_musicpod()
@@ -164,30 +296,145 @@ class MusicPlayer(QMainWindow):
 
         # ----- Panel Reproductor -----
         self.player_layout = QVBoxLayout()
+        self.player_layout.setSpacing(5)
+        self.player_layout.setContentsMargins(10, 10, 10, 10)
 
-        # Portada (cover) con efecto: se muestra por defecto el Logito.png
+        # Portada (cover) compacta
         self.cover_label = QLabel()
         self.cover_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.cover_label.setStyleSheet("border: 2px solid #444; border-radius: 5px; margin: 1px;")
+        self.cover_label.setFixedSize(180, 180)
+        self.cover_label.setStyleSheet("""
+            border: none;
+            background: transparent;
+        """)
         self.player_layout.addWidget(self.cover_label)
 
-        # Título y Artista
+        # Título y Artista compacto
         self.title_label = QLabel("Bienvenido a InstaPOD")
-        self.title_label.setStyleSheet("font-size: 16px; font-weight: bold;")
+        self.title_label.setStyleSheet("""
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            margin-top: 8px;
+            padding: 2px;
+            border: none;
+            background: transparent;
+        """)
         self.title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.title_label.setWordWrap(True)
         self.player_layout.addWidget(self.title_label)
+        
         self.artist_label = QLabel("Artista")
-        self.artist_label.setStyleSheet("color: #555; font-size: 14px;")
+        self.artist_label.setStyleSheet("""
+            color: #999999;
+            font-size: 12px;
+            margin-top: 0px;
+            margin-bottom: 5px;
+            border: none;
+            background: transparent;
+        """)
         self.artist_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.player_layout.addWidget(self.artist_label)
 
-        # Controles de reproducción
+        # Controles compactos
         self.controls_layout = QHBoxLayout()
+        self.controls_layout.setSpacing(8)
+        self.controls_layout.setContentsMargins(10, 5, 10, 5)
+        
         self.prev_button = QPushButton("⏮")
-        self.play_button = QPushButton("▶️")
+        self.prev_button.setFixedSize(45, 32)
+        self.prev_button.setStyleSheet("""
+            QPushButton {
+                border: 1px solid #555;
+                border-radius: 4px;
+                font-size: 16px;
+                background: #3a3a3a;
+                color: #ccc;
+            }
+            QPushButton:hover {
+                background: #4a4a4a;
+                border: 1px solid #666;
+            }
+            QPushButton:pressed {
+                background: #2a2a2a;
+            }
+        """)
+        
+        self.play_button = QPushButton("▶")
+        self.play_button.setFixedSize(45, 32)
+        self.play_button.setStyleSheet("""
+            QPushButton {
+                border: 1px solid #555;
+                border-radius: 4px;
+                font-size: 16px;
+                background: #3a3a3a;
+                color: #ccc;
+            }
+            QPushButton:hover {
+                background: #4a4a4a;
+                border: 1px solid #666;
+            }
+            QPushButton:pressed {
+                background: #2a2a2a;
+            }
+        """)
+        
         self.pause_button = QPushButton("⏸")
+        self.pause_button.setFixedSize(45, 32)
+        self.pause_button.setStyleSheet("""
+            QPushButton {
+                border: 1px solid #555;
+                border-radius: 4px;
+                font-size: 16px;
+                background: #3a3a3a;
+                color: #ccc;
+            }
+            QPushButton:hover {
+                background: #4a4a4a;
+                border: 1px solid #666;
+            }
+            QPushButton:pressed {
+                background: #2a2a2a;
+            }
+        """)
+        
         self.next_button = QPushButton("⏭")
-        self.download_button = QPushButton("⬇")
+        self.next_button.setFixedSize(45, 32)
+        self.next_button.setStyleSheet("""
+            QPushButton {
+                border: 1px solid #555;
+                border-radius: 4px;
+                font-size: 16px;
+                background: #3a3a3a;
+                color: #ccc;
+            }
+            QPushButton:hover {
+                background: #4a4a4a;
+                border: 1px solid #666;
+            }
+            QPushButton:pressed {
+                background: #2a2a2a;
+            }
+        """)
+        
+        self.download_button = QPushButton("💾")
+        self.download_button.setFixedSize(45, 32)
+        self.download_button.setStyleSheet("""
+            QPushButton {
+                border: 1px solid #555;
+                border-radius: 4px;
+                font-size: 16px;
+                background: #3a3a3a;
+                color: #ccc;
+            }
+            QPushButton:hover {
+                background: #4a4a4a;
+                border: 1px solid #666;
+            }
+            QPushButton:pressed {
+                background: #2a2a2a;
+            }
+        """)
         self.prev_button.clicked.connect(self.play_previous)
         self.play_button.clicked.connect(self.play_song)
         self.pause_button.clicked.connect(self.pause_song)
@@ -200,50 +447,135 @@ class MusicPlayer(QMainWindow):
         self.controls_layout.addWidget(self.download_button)
         self.player_layout.addLayout(self.controls_layout)
 
-        # Botón Radio
+        # Botón Radio compacto
         self.radio_layout = QHBoxLayout()
+        self.radio_layout.setContentsMargins(10, 5, 10, 5)
         self.radio_button = QPushButton("Radio: OFF")
         self.radio_button.setCheckable(True)
+        self.radio_button.setStyleSheet("""
+            QPushButton {
+                background: #3a3a3a;
+                border: 1px solid #555;
+                border-radius: 4px;
+                padding: 6px 12px;
+                font-size: 12px;
+                color: #ccc;
+            }
+            QPushButton:checked {
+                background: #4a4a4a;
+                border: 1px solid #666;
+            }
+            QPushButton:hover {
+                background: #4a4a4a;
+                border: 1px solid #666;
+            }
+        """)
         self.radio_button.clicked.connect(self.toggle_radio_mode)
         self.radio_layout.addWidget(self.radio_button)
         self.player_layout.addLayout(self.radio_layout)
 
-        # Slider de progreso y tiempo
+        # Slider compacto
         self.progress_slider = QSlider(Qt.Orientation.Horizontal)
         self.progress_slider.setRange(0, 0)
         self.progress_slider.sliderMoved.connect(self.seek_position)
+        self.progress_slider.setMinimumHeight(20)
+        self.progress_slider.setStyleSheet("""
+            QSlider {
+                margin: 5px 10px;
+            }
+            QSlider::groove:horizontal {
+                height: 4px;
+                background: #555;
+                border: none;
+            }
+            QSlider::handle:horizontal {
+                background: #ccc;
+                width: 12px;
+                height: 12px;
+                margin: -4px 0;
+                border-radius: 6px;
+                border: 1px solid #999;
+            }
+            QSlider::sub-page:horizontal {
+                background: #ccc;
+            }
+        """)
         self.player_layout.addWidget(self.progress_slider)
+        
         self.time_label = QLabel("00:00 / 00:00")
         self.time_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.time_label.setStyleSheet("""
+            color: #ccc;
+            font-size: 11px;
+            margin: 0px;
+            padding: 2px;
+            border: none;
+            background: transparent;
+        """)
         self.player_layout.addWidget(self.time_label)
 
         # Barra de descarga
         self.download_progress_bar = QProgressBar()
         self.download_progress_bar.setRange(0, 100)
+        self.download_progress_bar.setStyleSheet("""
+            QProgressBar {
+                background: rgba(26, 32, 44, 0.6);
+                border: none;
+                border-radius: 10px;
+                height: 22px;
+                text-align: center;
+                color: white;
+                font-weight: 600;
+                margin: 0px 30px;
+            }
+            QProgressBar::chunk {
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop:0 #f093fb, stop:1 #f5576c);
+                border-radius: 10px;
+            }
+        """)
         self.download_progress_bar.hide()
         self.player_layout.addWidget(self.download_progress_bar)
 
-        # Control de Volumen
+        # Control de Volumen compacto
         self.volume_label = QLabel("Volumen")
         self.volume_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.volume_label.setStyleSheet("""
+            font-size: 11px;
+            color: #ccc;
+            margin-top: 5px;
+            padding: 2px;
+            border: none;
+            background: transparent;
+        """)
         self.player_layout.addWidget(self.volume_label)
+        
         self.volume_slider = QSlider(Qt.Orientation.Horizontal)
         self.volume_slider.setRange(0, 100)
+        self.volume_slider.setMinimumHeight(20)
         # Cargar el volumen guardado (por defecto 50 si no hay guardado)
         saved_volume = self.settings.value("volume", 50, type=int)
         self.volume_slider.setValue(saved_volume)
         self.volume_slider.valueChanged.connect(self.set_volume)
         self.volume_slider.setStyleSheet("""
+            QSlider {
+                margin: 5px 10px;
+            }
             QSlider::groove:horizontal {
                 height: 4px;
-                background: #eee;
-                border-radius: 2px;
+                background: #555;
+                border: none;
             }
             QSlider::handle:horizontal {
-                background: #666;
+                background: #ccc;
                 width: 12px;
+                height: 12px;
                 margin: -4px 0;
                 border-radius: 6px;
+                border: 1px solid #999;
+            }
+            QSlider::sub-page:horizontal {
+                background: #ccc;
             }
         """)
         self.player_layout.addWidget(self.volume_slider)
@@ -286,14 +618,9 @@ class MusicPlayer(QMainWindow):
         self.tray_icon.show()
 
     def show_custom_notification(self, title: str, message: str):
-        # Inicializa notify2 (esto se hace una vez, pero aquí lo incluimos para asegurar que esté inicializado)
-        notify2.init("InstaPOD")
-        # Define la ruta a tu icono (puedes usar "Logito.png")
-        icon_path = os.path.join(os.getcwd(), "Musicpod", "Logito.png")
-        # Crea la notificación
-        n = notify2.Notification(title, message, icon_path)
-        n.set_timeout(3000)  # Tiempo en milisegundos
-        n.show()
+        # Usar notificaciones del sistema de Windows a través del tray icon
+        if hasattr(self, 'tray_icon') and self.tray_icon:
+            self.tray_icon.showMessage(title, message, QSystemTrayIcon.MessageIcon.Information, 3000)
 
 
     # -------------------------------------------------
@@ -324,26 +651,40 @@ class MusicPlayer(QMainWindow):
     # -------------------------------------------------
     def close_app(self):
         """Cierra la aplicación, detiene la reproducción y finaliza los hilos en ejecución."""
-        # Detener la reproducción de audio si está en curso
-        if self.player.playbackState() == QMediaPlayer.PlaybackState.PlayingState:
-            self.player.stop()
-
+        # Detener completamente la reproducción de audio
+        self.player.stop()
+        
+        # Limpiar el source del reproductor
+        self.player.setSource(QUrl())
+        
+        # Detener el audio output
+        self.audio_output.setVolume(0)
+        
         # Detener la radio si está activada
-        self.radio_mode = False  # Asegura que no se sigan cargando canciones de la radio
+        self.radio_mode = False
+        
+        # Detener el timer de refresco
+        if hasattr(self, 'refresh_timer'):
+            self.refresh_timer.stop()
 
         # Detener cualquier hilo activo en la pool
-        self.threadpool.waitForDone()  # Espera a que terminen todas las tareas en la cola
+        self.threadpool.waitForDone()
 
         # Ocultar el icono de la bandeja del sistema
         self.tray_icon.hide()
+        
+        # Liberar recursos del reproductor
+        self.player.setAudioOutput(None)
 
         # Cerrar la aplicación completamente
-        self.close()
+        QApplication.quit()
 
     def closeEvent(self, event):
+        """Maneja el evento de cierre de la ventana"""
+        # Minimizar a la bandeja en lugar de cerrar
         self.hide()
         if self.tray_icon.isVisible():
-            self.show_custom_notification("InstaPOD", "InstaPOD se minimizó a la bandeja")
+            self.show_custom_notification("InstaPOD", "InstaPOD se minimizó a la bandeja. Usa 'Salir' en el menú para cerrar completamente.")
         event.ignore()
 
     def show_notification(self, title: str, message: str):
@@ -357,14 +698,9 @@ class MusicPlayer(QMainWindow):
         default_icon_path = os.path.join(os.getcwd(), "Musicpod", "Logito.png")
         if os.path.exists(default_icon_path):
             pixmap = QPixmap(default_icon_path)
-            pixmap = pixmap.scaled(220, 220, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
-            self.cover_label.setPixmap(pixmap)
-            shadow = QGraphicsDropShadowEffect()
-            shadow.setBlurRadius(10)
-            shadow.setOffset(5, 5)
-            self.cover_label.setGraphicsEffect(shadow)
+            self.apply_cover_with_background(pixmap)
         else:
-            self.cover_label.setText("No se encontró Logito.png")
+            self.cover_label.setText("🎵\n\nInstaPOD")
 
     # -------------------------------------------------
     #       REPRODUCTOR LOCAL
@@ -404,11 +740,15 @@ class MusicPlayer(QMainWindow):
         self.player.pause()
 
     def play_next(self):
+        if not self.songs_data or len(self.songs_data) == 0:
+            return
         new_index = (self.current_index + 1) % len(self.songs_data)
         self.load_song(new_index)
         self.play_song()
 
     def play_previous(self):
+        if not self.songs_data or len(self.songs_data) == 0:
+            return
         new_index = (self.current_index - 1) % len(self.songs_data)
         self.load_song(new_index)
         self.play_song()
@@ -424,19 +764,41 @@ class MusicPlayer(QMainWindow):
                 pixmap = QPixmap()
                 pixmap.loadFromData(img_data)
             except Exception:
-                pixmap = QPixmap(400, 400)
+                pixmap = QPixmap(304, 304)
                 pixmap.fill(Qt.GlobalColor.gray)
         else:
-            pixmap = QPixmap(400, 400)
+            pixmap = QPixmap(304, 304)
             pixmap.fill(Qt.GlobalColor.gray)
-        pixmap = pixmap.scaled(400, 400, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
-        self.cover_label.setPixmap(pixmap)
+        self.apply_cover_with_background(pixmap)
 
     def set_cover_from_data(self, data):
         pixmap = QPixmap()
         pixmap.loadFromData(data)
-        pixmap = pixmap.scaled(400, 400, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
-        self.cover_label.setPixmap(pixmap)
+        self.apply_cover_with_background(pixmap)
+    
+    def apply_cover_with_background(self, pixmap):
+        """Aplica la miniatura/portada del álbum"""
+        try:
+            if pixmap and not pixmap.isNull():
+                # Escalar la imagen manteniendo la proporción
+                cover_pixmap = pixmap.scaled(
+                    250, 250,
+                    Qt.AspectRatioMode.KeepAspectRatio,
+                    Qt.TransformationMode.SmoothTransformation
+                )
+                self.cover_label.setPixmap(cover_pixmap)
+            else:
+                # Mostrar texto cuando no hay portada
+                self.cover_label.setStyleSheet("""
+                    border: none;
+                    background: transparent;
+                    color: #a0aec0;
+                    font-size: 14px;
+                """)
+                self.cover_label.setText("🎵\n\nSin portada")
+        except Exception as e:
+            print(f"Error aplicando cover: {e}")
+            self.cover_label.setText("🎵")
 
     # -------------------------------------------------
     #       POSICIÓN Y DURACIÓN
@@ -529,16 +891,16 @@ class MusicPlayer(QMainWindow):
     def toggle_radio_mode(self):
         self.radio_mode = not self.radio_mode
         if self.radio_mode:
-            self.radio_button.setText("Radio: ON")
+            self.radio_button.setText("🟢 Radio: ON")
             if self.search_results:
                 self.radio_index = 0
                 self.play_next_radio_track()
             else:
                 QMessageBox.information(self, "Radio", "No hay resultados de búsqueda para reproducir en modo radio.")
                 self.radio_mode = False
-                self.radio_button.setText("Radio: OFF")
+                self.radio_button.setText("🔴 Radio: OFF")
         else:
-            self.radio_button.setText("Radio: OFF")
+            self.radio_button.setText("🔴 Radio: OFF")
 
     def handle_media_status(self, status):
         if status == QMediaPlayer.MediaStatus.EndOfMedia and self.radio_mode:
@@ -572,6 +934,8 @@ class MusicPlayer(QMainWindow):
             self.play_next()
 
     def play_next(self):
+        if not self.songs_data or len(self.songs_data) == 0:
+            return
         new_index = (self.current_index + 1) % len(self.songs_data)
         self.load_song(new_index)
         self.play_song()
