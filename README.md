@@ -1,6 +1,10 @@
 # Music4All (Winamp)
 
-Music4All is a Winamp plugin that adds a Media Library panel to search and download audio from YouTube via `yt-dlp`, saving files as MP3 and adding them to Winamp.
+This is the **Winamp plugin** for Music4All.
+
+Music4All adds a Media Library panel to search and download audio from YouTube via `yt-dlp`, saving files as MP3 and adding them to Winamp.
+
+We’ll keep expanding support to more apps, platforms, and devices over time.
 
 This repository also includes an optional Python “companion” UI.
 
